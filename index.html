@@ -76,12 +76,14 @@
       align-items: center;
       justify-content: space-between;
       transition: var(--transition);
+		
+	  background: #0F0F0F; /* fundo sólido inicial */
+	  border-bottom: 1px solid var(--border);
     }
     nav.scrolled {
-      background: rgba(15,15,15,.85);
-      backdrop-filter: blur(20px) saturate(1.4);
-      border-bottom: 1px solid var(--border);
-    }
+	  background: rgba(15,15,15,.85);
+	  backdrop-filter: blur(20px) saturate(1.4);
+	}
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
@@ -151,7 +153,7 @@
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 1.5rem 5%;
-      z-index: 99;
+      z-index: 120;
       flex-direction: column;
       gap: 1.2rem;
     }
@@ -407,15 +409,22 @@
     .sobre-text h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.25rem; letter-spacing: -.03em; }
     .sobre-text p { color: var(--text-muted); margin-bottom: 1rem; font-size: .975rem; line-height: 1.8; }
 
-    .sobre-stats {
-      display: flex;
-      gap: 2rem;
-      margin: 2rem 0;
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .stat { text-align: center; }
+	.sobre-stats {
+	  display: flex;
+	  gap: 0;
+	  margin: 2rem auto;
+	  padding: 0;
+	  border: 1px solid var(--border);
+	  border-radius: var(--radius);
+	  overflow: hidden;
+	  width: fit-content;
+	}
+	.stat {
+	  text-align: center;
+	  padding: 1.25rem 2.5rem;
+	  border-right: 1px solid var(--border);
+	}
+	.stat:last-child { border-right: none; }
     .stat .num { font-family: 'Space Grotesk',sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1; }
     .stat .label { font-size: .72rem; color: var(--text-muted); margin-top: .3rem; letter-spacing: .04em; text-transform: uppercase; }
 
@@ -839,18 +848,18 @@
       <li><a href="#contato">Contato</a></li>
     </ul>
     <a href="#contato" class="nav-cta">Falar comigo</a>
-    <div class="hamburger" id="hamburger" aria-label="Menu" role="button">
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
       <span></span><span></span><span></span>
     </div>
   </nav>
 
-  <nav class="mobile-menu" id="mobileMenu">
-    <a href="#sobre" class="mobile-link">Sobre</a>
-    <a href="#especialidades" class="mobile-link">Especialidades</a>
-    <a href="#projetos" class="mobile-link">Projetos</a>
-    <a href="#experiencia" class="mobile-link">Experiência</a>
-    <a href="#contato" class="mobile-link">Contato</a>
-  </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#sobre" class="mobile-link">Sobre</a>
+  <a href="#especialidades" class="mobile-link">Especialidades</a>
+  <a href="#projetos" class="mobile-link">Projetos</a>
+  <a href="#experiencia" class="mobile-link">Experiência</a>
+  <a href="#contato" class="mobile-link">Contato</a>
+</div>
 
   <!-- ── HERO ── -->
   <section id="hero">
@@ -948,18 +957,22 @@
         </div>
 
         <div class="skills-tags fade-up delay-4">
-          <span class="tag">Power BI</span>
+          <span class="tag">BI</span>
+          <span class="tag">Automação</span>
+          <span class="tag">ETL</span>
           <span class="tag">Python</span>
           <span class="tag">SQL</span>
+          <span class="tag">n8n</span>
+          <br>
+		  <span class="tag">Power BI</span>
           <span class="tag">PostgreSQL</span>
           <span class="tag">Databricks</span>
           <span class="tag">AWS</span>
-          <span class="tag">ETL</span>
           <span class="tag">Data Catalog</span>
           <span class="tag">Airbyte</span>
-          <span class="tag">Data Warehouse</span>
+          <br>
+		  <span class="tag">Data Warehouse</span>
           <span class="tag">DAX / M</span>
-          <span class="tag">n8n</span>
           <span class="tag">Excel Avançado</span>
           <span class="tag">Web Scraping</span>
           <span class="tag">API REST</span>
