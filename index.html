@@ -441,6 +441,39 @@
     }
     .tag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
+	/* cards de estatisticas no sobre            */
+	.stats-cards{
+	  display:flex;
+	  gap:1rem;
+	  margin-top:2rem;
+	  flex-wrap:wrap;
+	}
+	.stat-card{
+	  background:#111;
+	  border:1px solid var(--border);
+	  border-radius:8px;
+	  padding:1.2rem 1.6rem;
+	  min-width:140px;
+	  text-align:center;
+	  transition:var(--transition);
+	  backdrop-filter:blur(10px);
+	}
+	.stat-card:hover{
+	  border-color:var(--accent);
+	  transform:translateY(-3px);
+	}
+	.stat-number{
+	  font-size:1.6rem;
+	  font-weight:700;
+	  color:var(--accent);
+	  font-family:'Space Grotesk',sans-serif;
+	}
+	.stat-label{
+	  font-size:.8rem;
+	  color:var(--text-muted);
+	  margin-top:.3rem;
+	}
+
     /* ─── ESPECIALIDADES ────────────────────────────────── */
     #especialidades { background: var(--bg-card2); }
     .esp-header { max-width: 1100px; margin: 0 auto 3.5rem; }
@@ -826,6 +859,13 @@
       .contato-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .sobre-stats { gap: 1.5rem; flex-wrap: wrap; }
+	  .stats-cards{ justify-content:center; }
+  }
+
+  .stat-card{
+    flex:1;
+    min-width:120px;
+  }
     }
 
     @media (max-width: 480px) {
@@ -941,20 +981,24 @@
           Passei pelos setores de contact center, moda, indústria, tecnologia e consultoria — sempre com o mesmo fio condutor: transformar dados dispersos em inteligência acionável. Fundei a Nectar Lab para consolidar essa jornada como produto e marca própria.
         </p>
 
-        <div class="sobre-stats fade-up delay-3">
-          <div class="stat">
-            <div class="num">+11</div>
-            <div class="label">Anos com dados</div>
-          </div>
-          <div class="stat">
-            <div class="num">+8</div>
-            <div class="label">Empresas atendidas</div>
-          </div>
-          <div class="stat">
-            <div class="num">+40</div>
-            <div class="label">Pessoas lideradas</div>
-          </div>
-        </div>
+		<div class="stats-cards">
+		
+		  <div class="stat-card">
+		    <div class="stat-number">+11</div>
+		    <div class="stat-label">Anos com dados</div>
+		  </div>
+		
+		  <div class="stat-card">
+		    <div class="stat-number">+8</div>
+		    <div class="stat-label">Empresas transformadas</div>
+		  </div>
+		
+		  <div class="stat-card">
+		    <div class="stat-number">+70</div>
+		    <div class="stat-label">Pessoas lideradas</div>
+		  </div>
+		
+		</div>
 
         <div class="skills-tags fade-up delay-4">
           <span class="tag">BI</span>
