@@ -902,6 +902,10 @@
       .esp-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; }
     }
+
+  @media (prefers-reduced-motion: reduce) {
+  	.fade-up { opacity: 1 !important; transform: none !important; }
+   }
   </style>
 </head>
 <body>
@@ -1649,9 +1653,36 @@
       });
     }
 	  
+
+    // ─── Fade-in on scroll ──────────────────────────────
+    /*
+     * FIX 2: the original code used [...fadeEls].indexOf(entry.target)
+     * which returns the GLOBAL index across all .fade-up elements on the
+     * entire page. Elements deep in the page (index 40, 50…) would receive
+     * delays of 3200ms–4000ms+, making the animation practically invisible.
+     *
+     * Fix: use `i` from the IntersectionObserver `entries` array instead.
+     * Each callback batch contains only the elements that became visible
+     * in that scroll tick, so the stagger resets per-batch (max ~4 items).
+     */
+	  
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry, i) => {
           if (entry.isIntersecting) {
             setTimeout(() => {
-              entry.targ
+              entry.target.classList.add('animate');
+            }, i * 80);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.fade-up').forEach(el => el.classList.add('animate'));
+    }
+  </script>
+
+</body>
+</html>
