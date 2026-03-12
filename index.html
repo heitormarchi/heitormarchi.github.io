@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heitor Marchi | Head de Dados & Inteligência Empresarial</title>
+  <meta name="description" content="Heitor Marchi — Head de Dados & Inteligência Empresarial. Transformando dados em decisões estratégicas através de analytics, BI e inteligência de negócio." />
+  <meta property="og:title" content="Heitor Marchi | Head de Dados & Inteligência Empresarial" />
+  <meta property="og:description" content="Transformando dados em decisões estratégicas através de analytics, BI e inteligência de negócio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://heitormarchi.com.br" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Variables ─────────────────────────────────────── */
+    :root {
+      --accent:      #F5B841;
+      --accent-dim:  rgba(245,184,65,.12);
+      --accent-glow: rgba(245,184,65,.25);
+      --bg:          #0F0F0F;
+      --bg-card:     #1A1A1A;
+      --bg-card2:    #141414;
+      --border:      rgba(255,255,255,.07);
+      --text:        #E5E5E5;
+      --text-muted:  #888;
+      --radius:      12px;
+      --radius-lg:   20px;
+      --transition:  all .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ─── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ─── Typography ─────────────────────────────────────── */
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; }
+    .accent { color: var(--accent); }
+
+    /* ─── Noise overlay ─────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: .6;
+    }
+
+    /* ─── Scrollbar ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5%;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(15,15,15,.85);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--accent);
+      color: #0F0F0F;
+      font-weight: 600;
+      font-size: .8rem;
+      padding: .45rem 1.1rem;
+      border-radius: 6px;
+      transition: var(--transition);
+      letter-spacing: .02em;
+    }
+    .nav-cta:hover { background: #ffc84a; transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(15,15,15,.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 5%;
+      z-index: 99;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 5% 60px;
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,184,65,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,184,65,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    /* Radial glow */
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,184,65,.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(245,184,65,.2);
+      border-radius: 100px;
+      padding: .35rem 1rem;
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.4); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .hero-title .line2 { color: var(--accent); }
+
+    .hero-subtitle {
+      font-size: clamp(.95rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0F0F0F;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: .9rem;
+      padding: .75rem 1.75rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary:hover { background: #ffc84a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,184,65,.3); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: .9rem;
+      padding: .75rem 1.75rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.02);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    .hero-socials {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .social-icon {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .social-icon:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+    .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      color: var(--text-muted);
+      font-size: .75rem;
+      animation: bounce 2.5s ease infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+    .hero-scroll svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+    /* ─── SECTION COMMONS ───────────────────────────────── */
+    section { position: relative; z-index: 1; padding: 100px 5%; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── SOBRE ──────────────────────────────────────────── */
+    #sobre .sobre-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .sobre-photo-wrap {
+      position: relative;
+    }
+    .sobre-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--accent), transparent 60%);
+      z-index: 0;
+    }
+    .sobre-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: calc(var(--radius-lg) - 2px);
+      object-fit: cover;
+      filter: grayscale(20%);
+    }
+    .sobre-photo-badge {
+      position: absolute;
+      bottom: 1.25rem;
+      right: -1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      z-index: 2;
+      backdrop-filter: blur(10px);
+    }
+    .sobre-photo-badge .num { font-family: 'Space Grotesk',sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .sobre-photo-badge .label { font-size: .7rem; color: var(--text-muted); margin-top: .15rem; }
+
+    .sobre-text h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.25rem; letter-spacing: -.03em; }
+    .sobre-text p { color: var(--text-muted); margin-bottom: 1rem; font-size: .975rem; line-height: 1.8; }
+
+    .sobre-stats {
+      display: flex;
+      gap: 2rem;
+      margin: 2rem 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat .num { font-family: 'Space Grotesk',sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .stat .label { font-size: .72rem; color: var(--text-muted); margin-top: .3rem; letter-spacing: .04em; text-transform: uppercase; }
+
+    .skills-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tag {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .78rem;
+      font-weight: 500;
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      transition: var(--transition);
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+    /* ─── ESPECIALIDADES ────────────────────────────────── */
+    #especialidades { background: var(--bg-card2); }
+    .esp-header { max-width: 1100px; margin: 0 auto 3.5rem; }
+    .esp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .esp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .esp-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+    .esp-card:hover { border-color: rgba(245,184,65,.3); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(245,184,65,.08); }
+    .esp-card:hover::after { transform: scaleX(1); }
+    .esp-icon {
+      width: 48px; height: 48px;
+      background: var(--accent-dim);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--accent);
+    }
+    .esp-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; }
+    .esp-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: .6rem; }
+    .esp-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ─── STACK ─────────────────────────────────────────── */
+    #stack { background: var(--bg); }
+    .stack-header { max-width: 1100px; margin: 0 auto 3.5rem; }
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .stack-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem .75rem;
+      text-align: center;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .stack-item:hover {
+      border-color: rgba(245,184,65,.35);
+      background: var(--accent-dim);
+      transform: translateY(-3px);
+    }
+    .stack-item:hover .stack-name { color: var(--accent); }
+    .stack-icon { width: 36px; height: 36px; margin: 0 auto .65rem; display: flex; align-items: center; justify-content: center; }
+    .stack-icon svg { width: 100%; height: 100%; }
+    .stack-name { font-size: .72rem; font-weight: 500; color: var(--text-muted); transition: var(--transition); }
+
+    /* ─── PROJETOS ──────────────────────────────────────── */
+    #projetos { background: var(--bg-card2); }
+    .proj-header { max-width: 1100px; margin: 0 auto 3.5rem; }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .proj-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(245,184,65,.15);
+      border-color: var(--accent);
+    }
+    .proj-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .proj-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .proj-icon svg { width: 22px; height: 22px; }
+    .proj-link-icon {
+      color: var(--text-muted);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .proj-card:hover .proj-link-icon { color: var(--accent); }
+    .proj-link-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+    .proj-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .25rem; }
+    .proj-card p { font-size: .855rem; color: var(--text-muted); line-height: 1.65; flex: 1; }
+    .proj-impacts { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin: .25rem 0; }
+    .proj-impacts li {
+      font-size: .8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    .proj-impacts li::before {
+      content: '↗';
+      color: var(--accent);
+      font-size: .75rem;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .proj-tag {
+      font-size: .7rem;
+      font-weight: 600;
+      padding: .25rem .65rem;
+      border-radius: 4px;
+      letter-spacing: .03em;
+    }
+
+    /* ─── EXPERIÊNCIA ───────────────────────────────────── */
+    #experiencia { background: var(--bg); }
+    .exp-header { max-width: 860px; margin: 0 auto 3.5rem; }
+    .timeline {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      transform: translateX(-4px);
+      transition: var(--transition);
+    }
+    .timeline-item:hover .timeline-dot { background: var(--accent); border-color: var(--accent); }
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: .75rem;
+      flex-wrap: wrap;
+    }
+    .timeline-period {
+      font-size: .75rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: .04em;
+      background: var(--accent-dim);
+      padding: .2rem .65rem;
+      border-radius: 4px;
+    }
+    .timeline-company {
+      font-size: .8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .timeline-title { font-family: 'Space Grotesk',sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+    .timeline-desc { font-size: .875rem; color: var(--text-muted); line-height: 1.75; }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+    .tl-tag {
+      font-size: .7rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      padding: .15rem .6rem;
+      border-radius: 4px;
+    }
+
+    /* ─── CONTATO ───────────────────────────────────────── */
+    #contato { background: var(--bg-card2); }
+    .contato-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .contato-info h2 { font-size: clamp(1.8rem,3vw,2.4rem); margin-bottom: 1rem; letter-spacing: -.03em; }
+    .contato-info p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; margin-bottom: 2rem; }
+    .contato-links { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 2rem; }
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: var(--transition);
+      color: var(--text-muted);
+      font-size: .875rem;
+    }
+    .contato-link:hover { border-color: var(--accent); color: var(--text); }
+    .contato-link svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; color: var(--accent); }
+
+    /* Form */
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      transition: var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245,184,65,.08);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: #0F0F0F;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: .9rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .btn-submit:hover { background: #ffc84a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,184,65,.3); }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy { font-size: .8rem; color: var(--text-muted); }
+    .footer-copy span { color: var(--accent); }
+    .footer-socials { display: flex; gap: .75rem; }
+    .footer-socials a {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .footer-socials a:hover { color: var(--accent); border-color: var(--accent); }
+    .footer-socials svg { width: 15px; height: 15px; fill: currentColor; }
+
+    /* ─── Fade-in animation ──────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: .1s; }
+    .fade-up.delay-2 { transition-delay: .2s; }
+    .fade-up.delay-3 { transition-delay: .3s; }
+    .fade-up.delay-4 { transition-delay: .4s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .esp-grid { grid-template-columns: repeat(2, 1fr); }
+      .proj-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 70px 5%; }
+      #sobre .sobre-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .sobre-photo-wrap { max-width: 280px; margin: 0 auto; }
+      .sobre-photo-badge { right: 0; }
+      .esp-grid { grid-template-columns: 1fr 1fr; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .contato-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .sobre-stats { gap: 1.5rem; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 480px) {
+      .esp-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: repeat(4, 1fr); }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <div class="nav-logo">HM<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#especialidades">Especialidades</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#experiencia">Experiência</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="#contato" class="nav-cta">Falar comigo</a>
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#sobre" class="mobile-link">Sobre</a>
+    <a href="#especialidades" class="mobile-link">Especialidades</a>
+    <a href="#projetos" class="mobile-link">Projetos</a>
+    <a href="#experiencia" class="mobile-link">Experiência</a>
+    <a href="#contato" class="mobile-link">Contato</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge fade-up">
+        <span class="hero-badge-dot"></span>
+        Disponível para novos projetos
+      </div>
+
+      <h1 class="hero-title fade-up delay-1">
+        Heitor<br><span class="line2">Marchi</span>
+      </h1>
+
+      <p class="hero-subtitle fade-up delay-2">
+        Head de Dados &amp; Inteligência Empresarial.<br>
+        Transformando dados em decisões estratégicas através de analytics, BI e inteligência de negócio.
+      </p>
+
+      <div class="hero-btns fade-up delay-3">
+        <a href="#projetos" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Ver Projetos
+        </a>
+        <a href="https://linkedin.com/in/heitormarchi" target="_blank" rel="noopener" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/heitormarchi" target="_blank" rel="noopener" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+
+      <div class="hero-socials fade-up delay-4">
+        <a href="https://linkedin.com/in/heitormarchi" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://github.com/heitormarchi" target="_blank" rel="noopener" class="social-icon" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#10737f7e6471647f50787579647f627d71627378793e737f7d3e7262" class="social-icon" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span>scroll</span>
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- ── SOBRE ── -->
+  <section id="sobre">
+    <div class="sobre-inner">
+      <div class="sobre-photo-wrap fade-up">
+        <img
+          class="sobre-photo"
+          src="https://avatars.githubusercontent.com/u/159141660"
+          alt="Foto de Heitor Marchi"
+          loading="lazy"
+        />
+        <div class="sobre-photo-badge">
+          <div class="num">+10</div>
+          <div class="label">anos com dados</div>
+        </div>
+      </div>
+
+      <div class="sobre-text">
+        <div class="section-label fade-up">Sobre mim</div>
+        <h2 class="fade-up delay-1">Lidero times e estratégias de dados com foco em resultado de negócio</h2>
+        <p class="fade-up delay-2">
+          Sou especialista em Inteligência Empresarial e Engenharia de Dados com mais de 10 anos de experiência — de analista de diretoria a fundador da Nectar Lab. Atuo na interseção entre negócios e tecnologia, construindo pipelines, dashboards estratégicos e culturas de dados que impulsionam decisões em todos os níveis organizacionais.
+        </p>
+        <p class="fade-up delay-2">
+          Passei pelos setores de contact center, moda, indústria, tecnologia e consultoria — sempre com o mesmo fio condutor: transformar dados dispersos em inteligência acionável. Fundei a Nectar Lab para consolidar essa jornada como produto e marca própria.
+        </p>
+
+        <div class="sobre-stats fade-up delay-3">
+          <div class="stat">
+            <div class="num">+11</div>
+            <div class="label">Anos com dados</div>
+          </div>
+          <div class="stat">
+            <div class="num">+8</div>
+            <div class="label">Empresas atendidas</div>
+          </div>
+          <div class="stat">
+            <div class="num">+40</div>
+            <div class="label">Pessoas lideradas</div>
+          </div>
+        </div>
+
+        <div class="skills-tags fade-up delay-4">
+          <span class="tag">Power BI</span>
+          <span class="tag">Python</span>
+          <span class="tag">SQL / T-SQL</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Databricks</span>
+          <span class="tag">AWS</span>
+          <span class="tag">ETL / dbt-core</span>
+          <span class="tag">Airbyte</span>
+          <span class="tag">Data Warehouse</span>
+          <span class="tag">DAX / M</span>
+          <span class="tag">Excel Avançado</span>
+          <span class="tag">Web Scraping</span>
+          <span class="tag">API REST</span>
+          <span class="tag">S&OP / Planejamento</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── ESPECIALIDADES ── -->
+  <section id="especialidades">
+    <div class="esp-header">
+      <div class="section-label fade-up">O que eu faço</div>
+      <h2 class="section-title fade-up delay-1">Especialidades</h2>
+      <p class="section-desc fade-up delay-2">Da estratégia à execução — entrego valor em cada camada da jornada de dados.</p>
+    </div>
+
+    <div class="esp-grid">
+      <div class="esp-card fade-up">
+        <div class="esp-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+        <h3>Data Strategy</h3>
+        <p>Estruturação de governança, roadmap e cultura de dados para suportar a tomada de decisão de diretores e executivos.</p>
+      </div>
+      <div class="esp-card fade-up delay-1">
+        <div class="esp-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Business Intelligence</h3>
+        <p>Construção de dashboards estratégicos, indicadores de performance e modelos analíticos que revelam o que os números escondem.</p>
+      </div>
+      <div class="esp-card fade-up delay-2">
+        <div class="esp-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Data Engineering</h3>
+        <p>Modelagem de dados, arquitetura de pipelines ETL/ELT, integração de fontes heterogêneas e automação de fluxos analíticos.</p>
+      </div>
+      <div class="esp-card fade-up delay-3">
+        <div class="esp-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Analytics & Insights</h3>
+        <p>Transformação de volumes massivos de dados em insights acionáveis que sustentam estratégias comerciais e operacionais.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── STACK ── -->
+  <section id="stack">
+    <div class="stack-header">
+      <div class="section-label fade-up">Ferramentas</div>
+      <h2 class="section-title fade-up delay-1">Stack Tecnológica</h2>
+      <p class="section-desc fade-up delay-2">As tecnologias que uso para entregar soluções de dados robustas e escaláveis.</p>
+    </div>
+
+    <div class="stack-grid fade-up delay-1">
+
+      <!-- Python -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.963 3.403 5.963h2.032v-2.867s-.109-3.402 3.35-3.402h5.769s3.24.052 3.24-3.13V3.19S18.28 0 11.914 0zm-3.2 1.848a1.047 1.047 0 1 1 0 2.094 1.047 1.047 0 0 1 0-2.094z" fill="#366994"/>
+            <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.963-3.403-5.963h-2.032v2.867s.109 3.402-3.35 3.402H9.446s-3.24-.052-3.24 3.13v5.343S5.72 24 12.086 24zm3.2-1.848a1.047 1.047 0 1 1 0-2.094 1.047 1.047 0 0 1 0 2.094z" fill="#FFC331"/>
+          </svg>
+        </div>
+        <div class="stack-name">Python</div>
+      </div>
+
+      <!-- SQL -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <ellipse cx="12" cy="5" rx="10" ry="3" stroke="#F5B841" stroke-width="1.5"/>
+            <path d="M2 5v4c0 1.657 4.477 3 10 3s10-1.343 10-3V5" stroke="#F5B841" stroke-width="1.5"/>
+            <path d="M2 9v4c0 1.657 4.477 3 10 3s10-1.343 10-3V9" stroke="#F5B841" stroke-width="1.5"/>
+            <path d="M2 13v4c0 1.657 4.477 3 10 3s10-1.343 10-3v-4" stroke="#F5B841" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="stack-name">SQL</div>
+      </div>
+
+      <!-- Power BI -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="10" width="4" height="10" rx="1" fill="#F2C811"/>
+            <rect x="8" y="6" width="4" height="14" rx="1" fill="#F2C811" opacity=".8"/>
+            <rect x="14" y="2" width="4" height="18" rx="1" fill="#F2C811" opacity=".6"/>
+            <rect x="20" y="8" width="2" height="12" rx="1" fill="#F2C811" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="stack-name">Power BI</div>
+      </div>
+
+      <!-- PostgreSQL -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M17.128 2C15.755 2 14.5 2.67 13.637 3.756 12.774 2.67 11.52 2 10.147 2 7.314 2 5 4.686 5 8c0 3.314 2.314 6 5.147 6 .842 0 1.632-.224 2.32-.615V16a2 2 0 0 0 2 2h.533v2h2v-4h-2.533V13.385c.688.391 1.478.615 2.32.615C19.619 14 22 11.314 22 8c0-3.314-2.314-6-4.872-6z" fill="#336791" opacity=".9"/>
+            <path d="M10 17v5h2v-5h-2z" fill="#336791"/>
+          </svg>
+        </div>
+        <div class="stack-name">PostgreSQL</div>
+      </div>
+
+      <!-- Excel -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="#217346"/>
+            <path d="M7 8l3 4-3 4h2.5l1.8-2.4L13 16h2.5l-3-4 3-4H13l-1.7 2.4L9.5 8H7z" fill="white"/>
+          </svg>
+        </div>
+        <div class="stack-name">Excel</div>
+      </div>
+
+      <!-- AWS -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7.5 13.5C7.5 13.5 6 13 6 11.5C6 10 7 9 8.5 9C8.5 7 10 6 12 6C14 6 15.5 7.5 15.5 9C16.5 9 18 10 18 11.5C18 13 16.5 13.5 16.5 13.5" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9 19l-2 1.5M15 19l2 1.5M12 19v2" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6 16.5C4.5 16 3 14.5 3 12.5C3 10.5 4.5 9 6 8.5" stroke="#FF9900" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <path d="M18 16.5C19.5 16 21 14.5 21 12.5C21 10.5 19.5 9 18 8.5" stroke="#FF9900" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="stack-name">AWS</div>
+      </div>
+
+      <!-- Databricks -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L3 7.5v4L12 17l9-5.5v-4L12 2z" fill="#FF3621" opacity=".9"/>
+            <path d="M3 11.5v4L12 21l9-5.5v-4L12 17l-9-5.5z" fill="#FF3621" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="stack-name">Databricks</div>
+      </div>
+
+      <!-- dbt -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3C7 3 4 6 4 10C4 14 7 17 12 17" stroke="#FF694A" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M12 7C17 7 20 10 20 14C20 18 17 21 12 21" stroke="#FF694A" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="2.5" fill="#FF694A"/>
+          </svg>
+        </div>
+        <div class="stack-name">dbt-core</div>
+      </div>
+
+      <!-- Airbyte -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#615EFF" stroke-width="1.5"/>
+            <path d="M8 12h8M14 9l3 3-3 3" stroke="#615EFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stack-name">Airbyte</div>
+      </div>
+
+      <!-- T-SQL -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#CC2927" stroke-width="1.5">
+            <ellipse cx="12" cy="6" rx="9" ry="3"/>
+            <path d="M3 6v6c0 1.657 4.03 3 9 3s9-1.343 9-3V6"/>
+            <path d="M3 12v6c0 1.657 4.03 3 9 3s9-1.343 9-3v-6"/>
+          </svg>
+        </div>
+        <div class="stack-name">T-SQL</div>
+      </div>
+
+      <!-- DAX/M -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F2C811" stroke-width="1.5">
+            <path d="M4 7l4 10 4-10 4 10 4-10"/>
+          </svg>
+        </div>
+        <div class="stack-name">DAX / M</div>
+      </div>
+
+      <!-- Git -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="#F05032">
+            <path d="M23.546 10.93L13.067.452a1.55 1.55 0 0 0-2.189 0L8.708 2.627l2.76 2.76a1.838 1.838 0 0 1 2.327 2.341l2.658 2.66a1.838 1.838 0 1 1-1.1 1.059L12.68 8.818v6.75a1.838 1.838 0 1 1-1.51-.045V8.764a1.838 1.838 0 0 1-.999-2.417L7.424 3.588 .452 10.56a1.55 1.55 0 0 0 0 2.19l10.48 10.477a1.55 1.55 0 0 0 2.189 0l10.425-10.425a1.55 1.55 0 0 0 0-2.189"/>
+          </svg>
+        </div>
+        <div class="stack-name">Git</div>
+      </div>
+
+      <!-- API REST -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F5B841" stroke-width="1.5">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="stack-name">API REST</div>
+      </div>
+
+      <!-- Pentaho -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4da6ff" stroke-width="1.5">
+            <rect x="3" y="8" width="4" height="8" rx="1"/>
+            <rect x="10" y="4" width="4" height="16" rx="1"/>
+            <rect x="17" y="8" width="4" height="8" rx="1"/>
+            <path d="M7 12h3M14 12h3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="stack-name">Pentaho</div>
+      </div>
+
+      <!-- Web Scraping -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4ddb88" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>
+          </svg>
+        </div>
+        <div class="stack-name">Scraping</div>
+      </div>
+
+      <!-- S&OP -->
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F5B841" stroke-width="1.5">
+            <path d="M3 3h18v4H3zM3 10h10v4H3zM3 17h14v4H3z"/>
+          </svg>
+        </div>
+        <div class="stack-name">S&amp;OP</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PROJETOS ── -->
+  <section id="projetos">
+    <div class="proj-header">
+      <div class="section-label fade-up">Cases</div>
+      <h2 class="section-title fade-up delay-1">Projetos & Resultados</h2>
+      <p class="section-desc fade-up delay-2">Cada projeto representa um problema real de negócio resolvido com dados — não apenas código.</p>
+    </div>
+
+    <div class="proj-grid">
+
+      <!-- Card 1 -->
+      <a href="https://github.com/heitormarchi/exactsales-teste-BI" target="_blank" rel="noopener" class="proj-card fade-up">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(242,200,17,.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F2C811" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <span class="proj-link-icon"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+        <div>
+          <h3>BI Estratégico — ExactSales</h3>
+        </div>
+        <p>Desafio técnico completo para posição de Analista de Dados: dashboard comercial no Power BI, modelagem de banco relacional e análise de funil de vendas.</p>
+        <ul class="proj-impacts">
+          <li>Pipeline de dados completo em T-SQL com modelagem relacional</li>
+          <li>Dashboard executivo com KPIs de conversão e eficiência comercial</li>
+          <li>Análise do funil de vendas evidenciando gargalos operacionais</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(242,200,17,.15);color:#F2C811;">Power BI</span>
+          <span class="proj-tag" style="background:rgba(204,41,39,.12);color:#e05c5a;">T-SQL</span>
+          <span class="proj-tag" style="background:rgba(51,103,145,.15);color:#6699cc;">PostgreSQL</span>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <div class="proj-card fade-up delay-1">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(54,105,148,.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6699cc" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Automação de Pipeline de Relatórios</h3>
+        </div>
+        <p>Eliminação de processos manuais repetitivos através de pipelines automatizados em Python, reduzindo drasticamente o tempo de geração de relatórios gerenciais.</p>
+        <ul class="proj-impacts">
+          <li>Redução de 35% no tempo de entrega de relatórios executivos</li>
+          <li>Integração com múltiplas fontes de dados via APIs RESTful</li>
+          <li>Economia de horas semanais em tarefas operacionais da equipe</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(255,195,49,.12);color:#FFC331;">Python</span>
+          <span class="proj-tag" style="background:rgba(245,184,65,.12);color:#F5B841;">SQL</span>
+          <span class="proj-tag" style="background:rgba(255,255,255,.06);color:#888;">APIs</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="proj-card fade-up delay-2">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(0,120,212,.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4da6ff" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Data Warehouse para Diretoria</h3>
+        </div>
+        <p>Implantação de BI estratégico centralizado para tomada de decisão executiva — consolidando dados de vendas, operações e finanças em uma única plataforma analítica.</p>
+        <ul class="proj-impacts">
+          <li>Unificação de 5+ fontes de dados em um único modelo analítico</li>
+          <li>Dashboards em tempo real para C-Level com alertas automáticos</li>
+          <li>Governança de dados e controle de acesso por perfil de usuário</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(0,120,212,.15);color:#4da6ff;">Azure</span>
+          <span class="proj-tag" style="background:rgba(242,200,17,.15);color:#F2C811;">Power BI</span>
+          <span class="proj-tag" style="background:rgba(245,184,65,.12);color:#F5B841;">SQL</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="proj-card fade-up delay-3">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(245,184,65,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F5B841" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Inteligência Comercial & Forecast</h3>
+        </div>
+        <p>Modelo preditivo de forecast de vendas integrado ao CRM, aumentando a previsibilidade do funil e permitindo planejamento de capacidade com antecedência.</p>
+        <ul class="proj-impacts">
+          <li>Precisão de forecast aumentada de 60% para 85% em 6 meses</li>
+          <li>Segmentação de clientes por score de conversão e LTV</li>
+          <li>Relatórios semanais automatizados entregues diretamente ao time comercial</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(255,195,49,.12);color:#FFC331;">Python</span>
+          <span class="proj-tag" style="background:rgba(242,200,17,.15);color:#F2C811;">Power BI</span>
+          <span class="proj-tag" style="background:rgba(204,41,39,.12);color:#e05c5a;">T-SQL</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="proj-card fade-up delay-4">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(0,180,80,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4ddb88" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Automação de Relatórios Fiscais</h3>
+        </div>
+        <p>Estruturação de processo automatizado de relatórios fiscais e contábeis, eliminando retrabalho manual e garantindo conformidade com prazos regulatórios.</p>
+        <ul class="proj-impacts">
+          <li>Eliminação de 100% das etapas manuais no fechamento mensal</li>
+          <li>Auditabilidade completa com histórico versionado de dados</li>
+          <li>Alertas automáticos de inconsistências antes do fechamento</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(255,195,49,.12);color:#FFC331;">Python</span>
+          <span class="proj-tag" style="background:rgba(245,184,65,.12);color:#F5B841;">SQL</span>
+          <span class="proj-tag" style="background:rgba(33,115,70,.15);color:#4daa66;">Excel</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="proj-card fade-up delay-4">
+        <div class="proj-card-header">
+          <div class="proj-icon" style="background:rgba(130,80,200,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a680e0" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Governança & Cultura de Dados</h3>
+        </div>
+        <p>Implementação de política de governança de dados corporativos: dicionário de dados, definição de KPIs oficiais, capacitação de times e democratização do acesso analítico.</p>
+        <ul class="proj-impacts">
+          <li>Redução de 70% nas divergências entre relatórios de diferentes áreas</li>
+          <li>Treinamento de +40 colaboradores em cultura e consumo de dados</li>
+          <li>Criação de data catalog com 200+ indicadores documentados</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" style="background:rgba(0,120,212,.15);color:#4da6ff;">M. Fabric</span>
+          <span class="proj-tag" style="background:rgba(242,200,17,.15);color:#F2C811;">Power BI</span>
+          <span class="proj-tag" style="background:rgba(245,184,65,.12);color:#F5B841;">SQL</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── EXPERIÊNCIA ── -->
+  <section id="experiencia">
+    <div class="exp-header">
+      <div class="section-label fade-up">Trajetória</div>
+      <h2 class="section-title fade-up delay-1">Experiência Profissional</h2>
+      <p class="section-desc fade-up delay-2">Uma jornada construída sobre resultados tangíveis, liderança e evolução contínua.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Nectar Lab -->
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Jun 2022 — Presente</span>
+          <span class="timeline-company">Nectar Lab · Autônomo · Remoto</span>
+        </div>
+        <div class="timeline-title">Fundador — Inteligência de Negócio & BI</div>
+        <p class="timeline-desc">
+          Criação da Nectar Lab como marca pessoal e portfólio vivo de projetos em Dados, BI e Gestão Empresarial. Desenvolvimento de dashboards impactantes, aplicativos analíticos personalizados e mapeamento e melhoria de processos para clientes PJ. Construção de uma presença digital como referência técnica na área de dados.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Power BI</span><span class="tl-tag">Python</span>
+          <span class="tl-tag">ETL</span><span class="tl-tag">DAX / M</span>
+          <span class="tl-tag">SQL</span><span class="tl-tag">Data Warehouse</span>
+        </div>
+      </div>
+
+      <!-- Pessoalize -->
+      <div class="timeline-item fade-up delay-1">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Fev 2024 — Presente</span>
+          <span class="timeline-company">Pessoalize · Autônomo · Florianópolis</span>
+        </div>
+        <div class="timeline-title">Engenheiro de Dados — Inteligência Empresarial</div>
+        <p class="timeline-desc">
+          Desenvolvimento de pipelines de dados em Python e SQL sobre infraestrutura AWS. Liderança do projeto de migração para Modern Data Stack, integrando Airbyte e dbt-core para transformação e orquestração de dados. Otimização de consultas, melhoria de rotinas analíticas e colaboração com equipes multifuncionais.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Python</span><span class="tl-tag">SQL</span>
+          <span class="tl-tag">AWS</span><span class="tl-tag">dbt-core</span>
+          <span class="tl-tag">Airbyte</span><span class="tl-tag">API REST</span>
+        </div>
+      </div>
+
+      <!-- Aros Negócios -->
+      <div class="timeline-item fade-up delay-1">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Fev 2024 — Presente</span>
+          <span class="timeline-company">Aros Negócios · Autônomo · Florianópolis</span>
+        </div>
+        <div class="timeline-title">Consultor de Planejamento Estratégico</div>
+        <p class="timeline-desc">
+          Estruturação da área de Planejamento, levantamento de indicadores e análise temporal de performance. Desenvolvimento de robôs para processamento de APIs e automação de rotinas de conciliação financeira, eliminando retrabalho manual e aumentando a confiabilidade dos dados operacionais.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Python</span><span class="tl-tag">Web Scraping</span>
+          <span class="tl-tag">Planejamento Estratégico</span><span class="tl-tag">Automação</span>
+        </div>
+      </div>
+
+      <!-- ZOOMtecnologia -->
+      <div class="timeline-item fade-up delay-2">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Fev 2023 — Dez 2023</span>
+          <span class="timeline-company">ZOOMtecnologia · CLT · Palhoça, SC</span>
+        </div>
+        <div class="timeline-title">Especialista em Inteligência de Negócios</div>
+        <p class="timeline-desc">
+          Transformou um cenário de planilhas sem governança em uma plataforma robusta de BI. Em parceria com um colega, criou um middleware que extraía dados do ERP, processava no Databricks e visualizava no Power BI — publicando indicadores para todas as gerências (Comercial, Compras, Financeiro, DP e Indústria) em apenas 3 meses. Liderou RFI para troca de ERP e aprovou o Planejamento Estratégico 2024–2028 junto à diretoria.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Power BI</span><span class="tl-tag">Databricks</span>
+          <span class="tl-tag">Python</span><span class="tl-tag">SQL</span>
+          <span class="tl-tag">ETL</span><span class="tl-tag">Gestão de Projetos</span>
+        </div>
+      </div>
+
+      <!-- Labellamafia -->
+      <div class="timeline-item fade-up delay-2">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Mai 2022 — Jan 2023</span>
+          <span class="timeline-company">Labellamafia · CLT · Palhoça, SC</span>
+        </div>
+        <div class="timeline-title">Coordenador de DevOps & Analytics / Head de S&OP</div>
+        <p class="timeline-desc">
+          Membro estratégico do Comitê Executivo com atuação dupla: liderou a área de DevOps e Analytics com práticas ágeis (Scrum/JIRA) e, em paralelo, assumiu em 2 meses o posto de Head de S&OP — gerenciando equipe, conduzindo reuniões semanais de planejamento e desenvolvendo estratégias de simulação no ERP para otimização de estoque e produção.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Power BI</span><span class="tl-tag">SQL</span>
+          <span class="tl-tag">Scrum / JIRA</span><span class="tl-tag">S&OP</span>
+          <span class="tl-tag">Liderança</span><span class="tl-tag">Excel</span>
+        </div>
+      </div>
+
+      <!-- Grupo Nexxees -->
+      <div class="timeline-item fade-up delay-3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Nov 2020 — Jul 2021</span>
+          <span class="timeline-company">Grupo Nexxees (Nexxera) · CLT · Florianópolis</span>
+        </div>
+        <div class="timeline-title">Especialista em BI / Auditor</div>
+        <p class="timeline-desc">
+          Transição de Auditoria de Produção para Business Intelligence: implantou ecossistema de insights com ETL via Pentaho, Data Warehouse em PostgreSQL e visualizações em Power BI. Na área de BI, analisou comportamento de clientes, desenvolveu iniciativas de cross-sell e gerou recomendações de leads para novas implantações, suportando diretamente o crescimento comercial.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Power BI</span><span class="tl-tag">PostgreSQL</span>
+          <span class="tl-tag">Pentaho</span><span class="tl-tag">ETL</span>
+          <span class="tl-tag">SQL</span><span class="tl-tag">Data Warehouse</span>
+        </div>
+      </div>
+
+      <!-- Flex Relacionamentos -->
+      <div class="timeline-item fade-up delay-3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Abr 2016 — Nov 2020</span>
+          <span class="timeline-company">Flex Relacionamentos Inteligentes · CLT · Florianópolis</span>
+        </div>
+        <div class="timeline-title">Coordenador de Automações, MIS & Planejamento</div>
+        <p class="timeline-desc">
+          Jornada de 4,5 anos crescendo de Supervisor a Coordenador. Liderou equipe de 20 analistas de MIS, sendo responsável por toda a informação gerada para mais de 70 clientes líderes de mercado. Coordenou automações de processos, implantação de dashboards em Power BI, kick-off de novos clientes e padronização de relatórios para Contact Center, SAC, Retenção e BackOffice.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Power BI</span><span class="tl-tag">SQL / T-SQL</span>
+          <span class="tl-tag">Excel</span><span class="tl-tag">ETL</span>
+          <span class="tl-tag">Data Warehouse</span><span class="tl-tag">Liderança</span>
+        </div>
+      </div>
+
+      <!-- Analista de Diretoria -->
+      <div class="timeline-item fade-up delay-4">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-period">Set 2014 — Abr 2016</span>
+          <span class="timeline-company">Flex Relacionamentos Inteligentes · Florianópolis</span>
+        </div>
+        <div class="timeline-title">Analista de Diretoria</div>
+        <p class="timeline-desc">
+          Início da carreira em dados fornecendo informações estratégicas para a Diretoria de Operações: apresentações ao Conselho, implantação do relatório EquiPresente para controle de absenteísmo, planilhas de controle operacional e cálculo de comissão. Base sólida em análise de processos, regras de negócio e comunicação executiva.
+        </p>
+        <div class="timeline-tags">
+          <span class="tl-tag">Excel</span><span class="tl-tag">SQL</span>
+          <span class="tl-tag">Dashboards</span><span class="tl-tag">Análise de Dados</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CONTATO ── -->
+  <section id="contato">
+    <div class="contato-inner">
+      <div class="contato-info">
+        <div class="section-label fade-up">Vamos conversar</div>
+        <h2 class="fade-up delay-1">Pronto para transformar seus dados em vantagem competitiva?</h2>
+        <p class="fade-up delay-2">
+          Se você busca um líder de dados com visão estratégica e capacidade de entrega, estou disponível para novos projetos, consultorias e oportunidades executivas.
+        </p>
+
+        <div class="contato-links fade-up delay-2">
+          <a href="https://linkedin.com/in/heitormarchi" target="_blank" rel="noopener" class="contato-link">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/heitormarchi
+          </a>
+          <a href="/cdn-cgi/l/email-protection#d4b7bbbaa0b5a0bb94bcb1bda0bba6b9b5a6b7bcbdfab7bbb9fab6a6" class="contato-link">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="__cf_email__" data-cfemail="0e6d61607a6f7a614e666b677a617c636f7c6d6667206d6163206c7c">[email&#160;protected]</span>
+          </a>
+          <a href="https://github.com/heitormarchi" target="_blank" rel="noopener" class="contato-link">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            github.com/heitormarchi
+          </a>
+        </div>
+
+        <a href="/cdn-cgi/l/email-protection#2d4e4243594c59426d45484459425f404c5f4e4544034e4240034f5f" class="btn-primary fade-up delay-3" style="display:inline-flex;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
+
+      <div class="contato-form fade-up delay-2">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="assunto">Assunto</label>
+          <input type="text" id="assunto" name="assunto" placeholder="Como posso ajudar?" />
+        </div>
+        <div class="form-group">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" placeholder="Conte mais sobre o projeto ou oportunidade..."></textarea>
+        </div>
+        <button type="button" class="btn-submit" id="submitBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Enviar Mensagem
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="footer-copy">© 2026 <span>Heitor Marchi</span> — Head de Dados & Inteligência Empresarial</p>
+    <div class="footer-socials">
+      <a href="https://linkedin.com/in/heitormarchi" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="https://github.com/heitormarchi" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      </a>
+      <a href="/cdn-cgi/l/email-protection#a9cac6c7ddc8ddc6e9c1ccc0ddc6dbc4c8dbcac1c087cac6c487cbdb" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:15px;height:15px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ─── Navbar scroll ─────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ─── Hamburger / mobile menu ────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // ─── Fade-in on scroll ──────────────────────────────
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => io.observe(el));
+
+    // Hero elements visible immediately
+    document.querySelectorAll('#hero .fade-up').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+
+    // ─── Form submit feedback ───────────────────────────
+    document.getElementById('submitBtn').addEventListener('click', function() {
+      const nome    = document.getElementById('nome').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const assunto = document.getElementById('assunto').value.trim();
+      const msg     = document.getElementById('mensagem').value.trim();
+
+      if (!nome || !email || !msg) {
+        this.textContent = 'Preencha os campos obrigatórios';
+        this.style.background = '#555';
+        setTimeout(() => {
+          this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2
